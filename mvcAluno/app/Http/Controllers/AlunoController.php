@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class AlunoController extends Controller{
     public function listar(){
-        $query = Aluno::query();
-        $alunos = $query->get();
+        // $query = Aluno::query();
+        // $alunos = $query->get();
+
+        $alunos = Aluno::with('turma')->get();
         return view('listar', compact('alunos'));
     }
 
@@ -16,12 +18,14 @@ class AlunoController extends Controller{
 
     $request->validate([
         'nome' => 'required|string|max:255',
-        'email' => 'required|string|max:255|unique:alunos,email'
+        'email' => 'required|string|max:255|unique:alunos,email',
+        'turma_id' => "nullable|exists:turma,id"
     ]);
 
     Aluno::create([
         'nome' => $request->nome,
-        'email' => $request->email
+        'email' => $request->email,
+        'turma_id' => $request->turma_id
     ]);
 
     return redirect()->back()->with('sucess','Aluno Cadastrado com sucesso!');
@@ -36,7 +40,7 @@ class AlunoController extends Controller{
     public function update(Request $request, $id){
         $request->validate([
             'nome' => 'required|string|max:255',
-            'email' => "required|string|max:255|unique:alunos,email, $id" 
+            'email' => "required|string|max:255|unique:alunos,email, $id"
         ]);
 
         $aluno = Aluno::findOrFail($id);

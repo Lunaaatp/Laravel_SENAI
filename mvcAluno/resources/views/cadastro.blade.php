@@ -3,24 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro usuários</title>
+    <title>Cadastro Alunos</title>
 </head>
 <body>
-    <h1>Cadastro Usuários</h1>
+    <h1>Cadastro Alunos</h1>
 
-    @if(session('sucess'))
-        <p style="color:green">{{ session('sucess')}}</p>
+    @if(session('success'))
+        <p style="color:green">{{ session('success')}}</p>
     @endif
 
-    <form action="{{ route('aluno.salvar') }}" method="POST">
+    <form action="{{route('aluno.salvar') }}" method="POST">
         @csrf
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" id="nome" placeholder="Nome..." require value="{{old('nome')}}">
+        <label for="nome">Nome: </label>
+        <input type="text" name="nome" id="nome" placeholder="Nome..."
+            require value="{{ old('nome') }}"
+        >
         <br><br>
+        <label for="email">Email: </label>
+        <input type="email" name="email" id="email" placeholder="Email..."
+            required value="{{ old('email')}}"
+        >
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" placeholder="Email..." require value="{{old('email')}}">
-        
+        <br><br>
+        <label for="turma_id">ID DA TURMA: </label>
+        <input type="number" name="turma_id" id="turma_id" placeholder="ID TURMA..."
+            value="{{ old('turma_id')}}"
+        >
+
         <input type="submit" value="Cadastrar">
     </form>
 
@@ -31,7 +40,6 @@
                     <li>{{ $erro }}</li>
                 @endforeach
             </ul>
-
         </div>
     @endif
 </body>

@@ -1,4 +1,5 @@
 <?php
+// Estou no arquivo Aluno.php
 
 namespace App\Models;
 
@@ -7,6 +8,11 @@ class Aluno extends Model
 {
     protected $fillable = [
         'nome',
-        'email'
+        'email',
+        'turma_id'
     ];
+
+    public function turma(){
+        return $this->belongsTo(Turma::class);
+    }
 }
